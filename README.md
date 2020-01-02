@@ -7,3 +7,10 @@ https://turkialmalki.github.io/MemoryGame/
 ![Screenshot](memoryGame.png)
 
 
+
+## Build with 
+### HTML
+### CSS
+### JS
+
+
