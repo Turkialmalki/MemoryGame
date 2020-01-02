@@ -52,15 +52,17 @@ deck.addEventListener('click', appearCard);
 function appearCard (){
   const press= event.target;
   if (press.classList.contains('card') && !press.classList.contains('match') && toggledCards.length < 2 && !toggledCards.includes(press)){
-   // initilaize the timer for every new game
+   // initilaize the time for each new game
      if (clockOff){
        clockBegins();
        clockOff= false;
      }
-     // call the next two function to flip over the card and add them into array
+
+     // call To flip over the card and add them into array
      toggleCard(press);
      addToggledCard(press);
-     // if the array of cards has 2 cards only we gonna apply match  and move func on them
+
+     // To check 2 crad mathech or not in array
      if (toggledCards.length === 2){
        isMatch(press);
        addMoves();
@@ -69,14 +71,13 @@ function appearCard (){
   }
 }
 
-// create a function to flip over the card
-
+// Flip over the card
 function toggleCard(press){
   press.classList.toggle('open');
   press.classList.toggle('show');
 }
 
-// create this card to push the filped card into the Array
+// Push the filped card into the Array
 
 function addToggledCard(press){
   toggledCards.push(press);
@@ -84,7 +85,7 @@ function addToggledCard(press){
 }
 
 
-// create a function for checking the match cards.
+// For checking if cards matched.
 
 function isMatch() {
   if (toggledCards[0].firstElementChild.className ===
@@ -97,7 +98,7 @@ function isMatch() {
            win();
          },1000)
        }
-       // if they are not matched will filp them over back again
+       // If they not matched will filped back over again.
        else {
          setTimeout(function (){
            toggleCard(toggledCards[0]);
@@ -107,17 +108,18 @@ function isMatch() {
        }
      }
 
-// create a function to increase moves!
+// To increase player moves!
+
  function addMoves() {
-   moves +=1;
+   moves = moves + 1;
    const movesCount= document.querySelector('.moves');
    movesCount.innerHTML= moves;
  }
 
-// the next function to handle score
+// Check for the game score 
 
  function checkingScore(){
-   if(moves===16 || moves === 24){
+   if(moves===16 || moves === 32){
      removingStar();
    }
  }
@@ -132,8 +134,6 @@ function removingStar(){
     }
   }
 }
-
-// calculte the time during game playing
 
 function clockBegins () {
   clockId= setInterval(function(){
@@ -159,14 +159,15 @@ function stopClock() {
   clearInterval(clockId);
 }
 
-// toggle the model
+
+// Here will show the popupMessage or The model 
 
 function toggleModel() {
   const model= document.querySelector('.backgroundModel');
   model.classList.toggle('hide');
 }
 
-// print all score info on the model
+// Showing information on the Box Model 
 
 function printModelStats() {
   const timeStats= document.querySelector('.timeModel');
@@ -191,61 +192,67 @@ function getStars() {
   return starCount;
 }
 
-// event listeners to the model
+
+// Here the Reset of the whole game
+function resetGame() {
+
+    // reset time
+      stopClock();
+      clockOff= true;
+      time= 0;
+      showTime();
+    
+    // reset moves
+     moves= 0;
+     document.querySelector('.moves').innerHTML= moves;
+    
+    // reset stars
+      stars= 0;
+      const starsList= document.querySelectorAll('.stars li');
+      for (star of starsList){
+        star.style.display= 'inline';
+      }
+    
+    // reset matching
+      matched= 0;
+      shuffleDeck();
+      resetCards();
+    }
+    
+    document.querySelector('.restart').addEventListener('click', resetGame);
+    
+    
+     function gameOver() {
+       stopClock();
+       printModelStats();
+       toggleModel();
+       resetCards();
+     }
+    
+    function resetCards() {
+      const cards= document.querySelectorAll('.deck li');
+      for (card of cards){
+        card.className= 'card';
+      }
+    }
+    
+    function win () {
+      if (matched === allPairs){
+        gameOver();
+      }
+    }
+    
+    function replayGame() {
+      resetGame();
+      toggleModel();
+      resetCards();
+    }
+    
+
+// event listener for repaly and cancel button
+
 document.querySelector('.cancelModel').addEventListener('click', function(){
   toggleModel();
 });
-
 document.querySelector('.replayModel').addEventListener('click', replayGame);
 
-// function to reset the game!
-
-function resetGame() {
- // reset time
-  stopClock();
-  clockOff= true;
-  time= 0;
-  showTime();
-  // reset moves
- moves= 0;
- document.querySelector('.moves').innerHTML= moves;
-  // reset stars
-  stars= 0;
-  const starsList= document.querySelectorAll('.stars li');
-  for (star of starsList){
-    star.style.display= 'inline';
-  }
-  // reset matching
-  matched= 0;
-  shuffleDeck();
-  resetCards();
-}
-
-document.querySelector('.restart').addEventListener('click', resetGame);
-
-
- function gameOver() {
-   stopClock();
-   printModelStats();
-   toggleModel();
-   resetCards();
- }
-
-function resetCards() {
-  const cards= document.querySelectorAll('.deck li');
-  for (card of cards){
-    card.className= 'card';
-  }
-}
-
-function win () {
-  if (matched === allPairs){
-    gameOver();
-  }
-}
-
-function replayGame() {
-  resetGame();
-  toggleModel();
-  resetCards();
-}
