@@ -1,6 +1,7 @@
 /* To store cards in the array */
 let toggledCards=[]; 
 
+
 /*
 for checking if we mathed all cards together to print final score model
 */
@@ -40,7 +41,7 @@ const deck= document.querySelector('.deck');
 function shuffleDeck() {
   const cardsForShuffling= Array.from(document.querySelectorAll('.deck li'));
   const shuffledCards= shuffle(cardsForShuffling);
-  for(card of shuffledCards){
+  for(const card of shuffledCards){
     deck.appendChild(card);
   }
 }
@@ -119,7 +120,7 @@ function isMatch() {
 // Check for the game score 
 
  function checkingScore(){
-   if(moves===16 || moves === 32){
+   if(moves===16 || moves === 24){
      removingStar();
    }
  }

@@ -178,3 +178,35 @@ h1, p{
   footer span {
      color: red;
   }
+
+
+@media screen and (min-width: 850px) {
+    main,
+    header,
+    footer {
+        width: 850px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .deck .card {
+        width: 75px;
+        height: 75px;
+        grid-template-columns: 75%;
+        justify-content: space-evenly;
+        grid-column: auto;
+        text-align: center;
+        margin-top: 5px;
+        margin-bottom: 35px;
+
+    }
+}
+
+@media screen and (min-width: 500px) and (max-width: 600px) {
+    .deck .card {
+        font-size: 0.9em;
+        padding: 5px;
+    }
+}
